@@ -1,9 +1,9 @@
 <?php
 
-namespace Sherry\Cms\Providers;
+namespace Sherrycin\Cms\Providers;
 
 
-use Sherry\Cms\Facades\Cms;
+use Sherrycin\Cms\Facades\Cms;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
@@ -44,8 +44,8 @@ class CmsServiceProvider extends ServiceProvider
     	$this->loadViewsFrom(__DIR__.'/../../views', 'cms');
     	$this->loadTranslationsFrom(__DIR__.'/../../lang/', 'cms');
     	if ($this->app->runningInConsole()) {
-    		$this->commands([
-    		]);
+    		$this->publishes([__DIR__.'/../resources/lang' => resource_path('lang')], 'laravel-admin-lang');
+    		$this->publishes([__DIR__.'/../../database/migrations' => database_path('migrations')], 'laravel-cms-migrations');
     	}
     	/**
     	$this->publishes([__DIR__.'/../../config/admin.php' => config_path('admin.php')], 'laravel-admin');

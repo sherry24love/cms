@@ -1,6 +1,6 @@
 <?php
 
-namespace Sherry\Cms;
+namespace Sherrycin\Cms;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
@@ -15,11 +15,11 @@ class Cms {
 	 */
 	public function registerAdminRoutes() {
 		$attributes = [
-				'prefix'        => config('shop.admin_prefix'),
-				'namespace'     => 'Sherry\Cms\Controllers',
+				'prefix'        => config('cms.route.prefix'),
+				'namespace'     => 'Sherrycin\Cms\Controllers',
 				'middleware'    => ['web', 'admin'],
 		];
-		
+		//dd( $attributes );
 		Route::group($attributes, function ($router) {
 			$attributes = ['middleware' => 'admin.permission:allow,administrator'];
 		

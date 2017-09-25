@@ -17,16 +17,16 @@
     ] ,
     "autoload": {
         "psr-4": {
-            "Sherry\\Cms\\": "src/"
+            "Sherrycin\\Cms\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Sherry\\Cms\\CmsServiceProvider"
+                "Sherrycin\\Cms\\CmsServiceProvider"
             ],
             "aliases": {
-                "Cms": "Sherry\\Cms\\Facades\\Cms"
+                "Cms": "Sherrycin\\Cms\\Facades\\Cms"
             }
 
         }

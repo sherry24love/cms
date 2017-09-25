@@ -1,6 +1,6 @@
 <?php
 
-namespace Sherry\Cms\Models;
+namespace Sherrycin\Cms\Models;
 
 use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;

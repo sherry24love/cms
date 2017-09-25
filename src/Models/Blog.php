@@ -1,6 +1,6 @@
 <?php
 
-namespace Sherry\Cms\Models;
+namespace Sherrycin\Cms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

@@ -1,5 +1,5 @@
 <?php
-namespace Sherry\Cms\Controllers;
+namespace Sherrycin\Cms\Controllers;
 
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -7,8 +7,8 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Column;
 
-use Sherry\Cms\Models\Category ;
-use Sherry\Cms\Models\Posts ;
+use Sherrycin\Cms\Models\Category ;
+use Sherrycin\Cms\Models\Posts ;
 
 use Encore\Admin\Controllers\ModelForm ;
 use App\Admin\Extensions\Tools\Trashed;
@@ -42,7 +42,7 @@ class PostsController extends BaseController {
 			$user = auth()->guard('admin')->user();
 			$orgId = $this->orgId();
 			if( $orgId ) {
-				$grid->model()->where('org_id' , $orgId );
+				//$grid->model()->where('org_id' , $orgId );
 			}
 			/**
 			 * 如果是平台管理员过来 必须有session('org_id') 否则直接视为平台菜单
@@ -53,7 +53,7 @@ class PostsController extends BaseController {
 			**/
 			
 			$grid->title(trans('cms::lang.title'));
-			$grid->column('category.name' , trans('cms::lang.category'));
+			//$grid->column('category.name' , trans('cms::lang.category'));
 			$states = [
 					'on'  => ['value' => 1, 'text' => trans('cms::lang.yes') , 'color' => 'success'],
 					'off' => ['value' => 0, 'text' => trans('cms::lang.no') , 'color' => 'danger'],
@@ -71,6 +71,7 @@ class PostsController extends BaseController {
 			$grid->created_at(trans('admin::lang.created_at'));
 			$grid->filter(function ($filter) {
 				$filter->like('title', trans('cms::lang.title'));
+				/**
 				$filter->equal('category_id' , trans('cms::lang.category') )->select( function(){
 					$cate = new Category();
 					/**
@@ -79,10 +80,11 @@ class PostsController extends BaseController {
 					 } else {
 					 return $cate->selectOwnTree( 0 );
 					 }
-					 **/
+					 **
 					//这里目前只开放平台分类，因些类别根目录为0
 					return $cate->selectOwnTree( 0 );
 				});
+			**/
 				$filter->disableIdFilter();
 			});
 			$grid->tools( function( $tools ){

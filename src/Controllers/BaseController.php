@@ -1,6 +1,6 @@
 <?php 
 
-namespace Sherry\Cms\Controllers ;
+namespace Sherrycin\Cms\Controllers ;
 
 
 use Illuminate\Routing\Controller;
