@@ -18,8 +18,8 @@ class BlogController extends BaseController {
 	public function index() {
 		
 		return Admin::content(function (Content $content) {
-			$content->header(trans('cms::lang.blog'));
-			$content->description(trans('admin::lang.list'));
+			$content->header(trans('cms.blog'));
+			$content->description(trans('admin.list'));
 			$content->body($this->grid()->render());
 		});
 	}
@@ -37,7 +37,7 @@ class BlogController extends BaseController {
 				$grid->model()->onlyTrashed();
 			}
 			$grid->id('ID')->sortable();
-			$grid->title(trans('cms::lang.title'));
+			$grid->title(trans('cms.title'));
 			$grid->column('doctor.name' , '医生姓名');
 			$grid->content( '简介' )->display( function( $v ){
 				return str_limit( $v , 50 );
@@ -45,14 +45,14 @@ class BlogController extends BaseController {
 			$grid->display('是否显示')->display( function( $v ){
 				return $v == 1 ? '显示' : '不显示' ;
 			} );
-			$grid->created_at(trans('admin::lang.created_at'));
-			$grid->updated_at(trans('admin::lang.updated_at'));
+			$grid->created_at(trans('admin.created_at'));
+			$grid->updated_at(trans('admin.updated_at'));
 			$grid->disableExport();
 			$grid->disableRowSelector();
 			$grid->disableBatchDeletion();
 			$grid->filter(function ($filter) {
 				$filter->disableIdFilter();
-				$filter->like('title', trans('cms::lang.title'));
+				$filter->like('title', trans('cms.title'));
 			});
 			
 			$grid->tools( function( $tools ){
@@ -71,8 +71,8 @@ class BlogController extends BaseController {
 	 */
 	public function create() {
 		return Admin::content(function (Content $content) {
-			$content->header(trans('cms::lang.blog'));
-			$content->description(trans('admin::lang.create'));
+			$content->header(trans('cms.blog'));
+			$content->description(trans('admin.create'));
 			$content->body($this->form());
 		});
 	}
@@ -82,8 +82,8 @@ class BlogController extends BaseController {
 	 */
 	public function edit( $id ) {
 		return Admin::content(function (Content $content) use( $id ) {
-			$content->header(trans('cms::lang.blog'));
-			$content->description(trans('admin::lang.edit'));
+			$content->header(trans('cms.blog'));
+			$content->description(trans('admin.edit'));
 			$content->body($this->form()->edit( $id ) );
 		});
 	}
@@ -92,18 +92,18 @@ class BlogController extends BaseController {
 	protected function form() {
 		return Admin::form( Blog::class, function ( Form $form) {
 			$form->text('user.mobile', '医生手机号' )->rules('required');
-			$form->text('title', trans('cms::lang.title'))->rules('required');
-			$form->text('keyword', trans('cms::lang.keyword'));
-			$form->text('description', trans('cms::lang.description'));
-			$form->textarea('content', trans('cms::lang.content'))->rules('required');
-			$form->multipleImage('images', trans('cms::lang.cover'));
+			$form->text('title', trans('cms.title'))->rules('required');
+			$form->text('keyword', trans('cms.keyword'));
+			$form->text('description', trans('cms.description'));
+			$form->textarea('content', trans('cms.content'))->rules('required');
+			$form->multipleImage('images', trans('cms.cover'));
 			$states = [
-					'on'  => ['value' => 1, 'text' => trans('cms::lang.yes') , 'color' => 'success'],
-					'off' => ['value' => 0, 'text' => trans('cms::lang.no') , 'color' => 'danger'],
+					'on'  => ['value' => 1, 'text' => trans('cms.yes') , 'color' => 'success'],
+					'off' => ['value' => 0, 'text' => trans('cms.no') , 'color' => 'danger'],
 			];
 			$form->switch('display' , '是否审核')->states( $states );
-			$form->display('created_at', trans('admin::lang.created_at'));
-			$form->display('updated_at', trans('admin::lang.updated_at'));
+			$form->display('created_at', trans('admin.created_at'));
+			$form->display('updated_at', trans('admin.updated_at'));
 			$form->ignore('user.mobile');
 			$form->saving( function( Form $form ){
 				$mobile = request('user.mobile');

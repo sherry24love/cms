@@ -42,9 +42,9 @@ class CmsServiceProvider extends ServiceProvider
     {
         //
     	$this->loadViewsFrom(__DIR__.'/../../views', 'cms');
-    	$this->loadTranslationsFrom(__DIR__.'/../../lang/', 'cms');
+    	//$this->loadTranslationsFrom(__DIR__.'/../../lang/', 'cms');
     	if ($this->app->runningInConsole()) {
-    		$this->publishes([__DIR__.'/../resources/lang' => resource_path('lang')], 'laravel-admin-lang');
+    		$this->publishes([__DIR__.'/../../resources/lang' => resource_path('lang')], 'laravel-cms-lang');
     		$this->publishes([__DIR__.'/../../database/migrations' => database_path('migrations')], 'laravel-cms-migrations');
     	}
     	/**

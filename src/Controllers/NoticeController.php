@@ -17,8 +17,8 @@ class NoticeController extends BaseController {
 	public function index() {
 		
 		return Admin::content(function (Content $content) {
-			$content->header(trans('cms::lang.notice'));
-			$content->description(trans('admin::lang.list'));
+			$content->header(trans('cms.notice'));
+			$content->description(trans('admin.list'));
 			$content->body($this->grid()->render());
 		});
 	}
@@ -37,19 +37,19 @@ class NoticeController extends BaseController {
 				$grid->model()->onlyTrashed();
 			}
 			$grid->id('ID')->sortable();
-			$grid->title(trans('cms::lang.title'));
+			$grid->title(trans('cms.title'));
 			$grid->content( '通知内容' )->display( function( $v ){
 				return str_limit( $v , 50 );
 			} );
 	
-			$grid->created_at(trans('admin::lang.created_at'));
-			$grid->updated_at(trans('admin::lang.updated_at'));
+			$grid->created_at(trans('admin.created_at'));
+			$grid->updated_at(trans('admin.updated_at'));
 			$grid->disableExport();
 			$grid->disableRowSelector();
 			$grid->disableBatchDeletion();
 			$grid->filter(function ($filter) {
 				$filter->disableIdFilter();
-				$filter->like('title', trans('cms::lang.title'));
+				$filter->like('title', trans('cms.title'));
 			});
 			
 			$grid->tools( function( $tools ){
@@ -68,8 +68,8 @@ class NoticeController extends BaseController {
 	 */
 	public function create() {
 		return Admin::content(function (Content $content) {
-			$content->header(trans('cms::lang.notice'));
-			$content->description(trans('admin::lang.create'));
+			$content->header(trans('cms.notice'));
+			$content->description(trans('admin.create'));
 			$content->body($this->form());
 		});
 	}
@@ -79,8 +79,8 @@ class NoticeController extends BaseController {
 	 */
 	public function edit( $id ) {
 		return Admin::content(function (Content $content) use( $id ) {
-			$content->header(trans('cms::lang.notice'));
-			$content->description(trans('admin::lang.edit'));
+			$content->header(trans('cms.notice'));
+			$content->description(trans('admin.edit'));
 			$content->body($this->form()->edit( $id ) );
 		});
 	}
@@ -89,10 +89,10 @@ class NoticeController extends BaseController {
 	protected function form() {
 		return Admin::form( Notice::class, function ( Form $form) {
 			$form->display('id', 'ID');
-			$form->text('title', trans('cms::lang.title'))->rules('required');
-			$form->textarea('content', trans('cms::lang.content'))->rules('required');
-			$form->display('created_at', trans('admin::lang.created_at'));
-			$form->display('updated_at', trans('admin::lang.updated_at'));
+			$form->text('title', trans('cms.title'))->rules('required');
+			$form->textarea('content', trans('cms.content'))->rules('required');
+			$form->display('created_at', trans('admin.created_at'));
+			$form->display('updated_at', trans('admin.updated_at'));
 		});
 	}
 	

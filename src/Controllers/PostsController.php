@@ -19,8 +19,8 @@ class PostsController extends BaseController {
 	public function index() {
 		
 		return Admin::content(function (Content $content) {
-			$content->header(trans('cms::lang.posts'));
-			$content->description(trans('admin::lang.list'));
+			$content->header(trans('cms.posts'));
+			$content->description(trans('admin.list'));
 			$content->body($this->grid()->render());
 		});
 	}
@@ -52,27 +52,23 @@ class PostsController extends BaseController {
 			}
 			**/
 			
-			$grid->title(trans('cms::lang.title'));
-			//$grid->column('category.name' , trans('cms::lang.category'));
+			$grid->title(trans('cms.title'));
+			$grid->column('category.name' , trans('cms.category'));
 			$states = [
-					'on'  => ['value' => 1, 'text' => trans('cms::lang.yes') , 'color' => 'success'],
-					'off' => ['value' => 0, 'text' => trans('cms::lang.no') , 'color' => 'danger'],
+					'on'  => ['value' => 1, 'text' => trans('cms.yes') , 'color' => 'success'],
+					'off' => ['value' => 0, 'text' => trans('cms.no') , 'color' => 'danger'],
 			];
 			if (request('trash') != 1) {
-				$grid->is_hot( trans('cms::lang.is_hot' ) )->switch($states);
-				$grid->is_recom( trans('cms::lang.is_recom' ) )->switch($states);
-				$grid->is_top( trans('cms::lang.is_top' ) )->switch($states);
-				$grid->is_pic( trans('cms::lang.is_pic' ) )->switch($states);
-				$user = auth()->guard('admin')->user();
-				if( !$user->org_id ) {
-					$grid->display('是否显示')->switch( $states );
-				}
+				//$grid->is_hot( trans('cms.is_hot' ) )->switch($states);
+				//$grid->is_recom( trans('cms.is_recom' ) )->switch($states);
+				$grid->is_top( trans('cms.is_top' ) )->switch($states);
+				$grid->is_pic( trans('cms.is_pic' ) )->switch($states);
 			}
-			$grid->created_at(trans('admin::lang.created_at'));
+			$grid->created_at(trans('admin.created_at'));
 			$grid->filter(function ($filter) {
-				$filter->like('title', trans('cms::lang.title'));
-				/**
-				$filter->equal('category_id' , trans('cms::lang.category') )->select( function(){
+				$filter->like('title', trans('cms.title'));
+				
+				$filter->equal('category_id' , trans('cms.category') )->select( function(){
 					$cate = new Category();
 					/**
 					 if( $orgId ) {
@@ -80,22 +76,18 @@ class PostsController extends BaseController {
 					 } else {
 					 return $cate->selectOwnTree( 0 );
 					 }
-					 **
+					 **/
 					//这里目前只开放平台分类，因些类别根目录为0
 					return $cate->selectOwnTree( 0 );
 				});
-			**/
+			
 				$filter->disableIdFilter();
 			});
 			$grid->tools( function( $tools ){
 				$tools->append( new Trashed() );
 			});
-			$grid->disableBatchDeletion();
 			$grid->disableExport();
 			$grid->actions( function( $action ) use( $user ) {
-				if( $user->org_id && $action->row->display == 1 ) {
-					$action->disableDelete();
-				}
 				if (request('trash') == 1) {
 					$action->disableEdit();
 				}
@@ -108,8 +100,8 @@ class PostsController extends BaseController {
 	 */
 	public function create() {
 		return Admin::content(function (Content $content) {
-			$content->header(trans('cms::lang.posts'));
-			$content->description(trans('admin::lang.create'));
+			$content->header(trans('cms.posts'));
+			$content->description(trans('admin.create'));
 			$content->body($this->form());
 		});
 	}
@@ -119,8 +111,8 @@ class PostsController extends BaseController {
 	 */
 	public function edit( $id ) {
 		return Admin::content(function (Content $content) use( $id ) {
-			$content->header(trans('cms::lang.posts'));
-			$content->description(trans('admin::lang.create'));
+			$content->header(trans('cms.posts'));
+			$content->description(trans('admin.create'));
 			$content->body($this->form()->edit( $id ) );
 		});
 	}
@@ -137,54 +129,31 @@ class PostsController extends BaseController {
 	protected function form() {
 		return Admin::form( Posts::class, function ( Form $form) {
 			$form->display('id', 'ID');
-			$orgId = $this->orgId() ;
-			$form->text('title', trans('cms::lang.title'))->rules('required')
-			->vmessages([
+			$form->text('title', trans('cms.title'))->rules('required' , [
 					'required' => '请填写资讯标题'
-			])
-			->mustFill();
-			$form->select('category_id', trans('cms::lang.category'))->options(function() use( $orgId ) {
+			]);
+			
+			$form->select('category_id', trans('cms.category'))->options(function() {
 				$cate = new Category();
-				/**
-				if( $orgId ) {
-					return $cate->selectOwnTree( $orgId );
-				} else {
-					return $cate->selectOwnTree( 0 );
-				}
-				**/
 				//这里目前只开放平台分类，因些类别根目录为0
 				return $cate->selectOwnTree( 0 );
 				
-			})->help( trans('cms::lang.category_help'))
-			->rules('required')
-			->vmessages([
+			})->help( trans('cms.category_help'))
+			->rules('required' , [
 					'required' => '请选择资讯分类' ,
-			])->mustFill();
-			$form->text('author', trans('cms::lang.author'));
-			$form->text('keyword', trans('cms::lang.keyword'));
-			$form->text('description', trans('cms::lang.description'));
-			$form->image('cover', trans('cms::lang.cover'));
-			$form->ueditor('content', trans('cms::lang.content'))->rules('required');
+			]);
+			$form->text('author', trans('cms.author'));
+			$form->text('keyword', trans('cms.keyword'));
+			$form->text('description', trans('cms.description'));
+			$form->image('cover', trans('cms.cover'));
+			$form->ueditor('content', trans('cms.content'))->rules('required');
 			$states = [
-					'on'  => ['value' => 1, 'text' => trans('cms::lang.yes') , 'color' => 'success'],
-					'off' => ['value' => 0, 'text' => trans('cms::lang.no') , 'color' => 'danger'],
+					'on'  => ['value' => 1, 'text' => trans('cms.yes') , 'color' => 'success'],
+					'off' => ['value' => 0, 'text' => trans('cms.no') , 'color' => 'danger'],
 			];
-			$form->switch( 'is_hot' , trans('cms::lang.is_hot'))->states( $states );
-			$form->switch( 'is_recom' , trans('cms::lang.is_recom'))->states( $states );
-			$form->switch( 'is_top' , trans('cms::lang.is_top'))->states( $states );
-			$form->switch( 'is_pic' , trans('cms::lang.is_pic'))->states( $states );
+			$form->switch( 'is_top' , trans('cms.is_top'))->states( $states );
+			$form->switch( 'is_pic' , trans('cms.is_pic'))->states( $states );
 			$user = auth()->guard('admin')->user();
-			if( !$user->org_id ) {
-				$form->switch( 'display' , '立即显示')->states( $states );
-			}
-			
-			
-			$form->saving( function( $form ) use ( $orgId ) {
-				
-				if( $form->builder()->isMode( 'create' ) ) {
-					$form->model()->org_id = $orgId ? $orgId : 0  ;
-				}
-			});
 		});
 	}
 	

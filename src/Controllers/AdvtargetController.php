@@ -5,11 +5,13 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
-
-use Sherry\Cms\Models\Advtarget ;
-
 use Encore\Admin\Controllers\ModelForm ;
-use Sherry\Cms\Models\Advertisement;
+
+
+use Sherrycin\Cms\Models\Advtarget ;
+use Sherrycin\Cms\Models\Advertisement;
+
+
 
 class AdvtargetController extends BaseController {
 	use ModelForm;
@@ -17,8 +19,8 @@ class AdvtargetController extends BaseController {
 	public function index() {
 		
 		return Admin::content(function (Content $content) {
-			$content->header(trans('cms::lang.advtarget'));
-			$content->description(trans('admin::lang.list'));
+			$content->header(trans('cms.advtarget'));
+			$content->description(trans('admin.list'));
 			$content->body($this->grid()->render());
 		});
 	}
@@ -33,14 +35,14 @@ class AdvtargetController extends BaseController {
 		return Admin::grid( Advtarget::class, function (Grid $grid) {
 			$grid->id('ID')->sortable();
 			$grid->model()->orderBy('id' , 'desc');
-			$grid->name(trans('cms::lang.adv_target_title'));
-			$grid->slug(trans('cms::lang.slug'));
+			$grid->title(trans('cms.adv_target_title'));
+			$grid->slug(trans('cms.slug'));
 	
-			$grid->created_at(trans('admin::lang.created_at'));
-			$grid->updated_at(trans('admin::lang.updated_at'));
+			$grid->created_at(trans('admin.created_at'));
+			$grid->updated_at(trans('admin.updated_at'));
 			$grid->filter(function ($filter) {
 				$filter->disableIdFilter();
-				$filter->like('title', trans('cms::lang.adv_target_title'));
+				$filter->like('title', trans('cms.adv_target_title'));
 				$filter->like('slug' , '别名');
 			});
 			$grid->disableExport();
@@ -52,8 +54,8 @@ class AdvtargetController extends BaseController {
 	 */
 	public function create() {
 		return Admin::content(function (Content $content) {
-			$content->header(trans('cms::lang.advtarget'));
-			$content->description(trans('admin::lang.create'));
+			$content->header(trans('cms.advtarget'));
+			$content->description(trans('admin.create'));
 			$content->body($this->form());
 		});
 	}
@@ -63,8 +65,8 @@ class AdvtargetController extends BaseController {
 	 */
 	public function edit( $id ) {
 		return Admin::content(function (Content $content) use( $id ) {
-			$content->header(trans('cms::lang.advtarget'));
-			$content->description(trans('admin::lang.edit'));
+			$content->header(trans('cms.advtarget'));
+			$content->description(trans('admin.edit'));
 			$content->body($this->form()->edit( $id ) );
 		});
 	}
@@ -74,11 +76,11 @@ class AdvtargetController extends BaseController {
 		return Admin::form( Advtarget::class, function ( Form $form) {
 			$form->display('id', 'ID');
 		
-			$form->text('name', trans('cms::lang.title'))->rules('required');
-			$form->text('slug', trans('cms::lang.slug'))->rules('required');
-			$form->textarea('description', trans('cms::lang.description'))->placeholder( trans('cms::lang.advtarget_description') );
-			$form->display('created_at', trans('admin::lang.created_at'));
-			$form->display('updated_at', trans('admin::lang.updated_at'));
+			$form->text('title', trans('cms.title'))->rules('required');
+			$form->text('slug', trans('cms.slug'))->rules('required');
+			$form->textarea('description', trans('cms.description'))->placeholder( trans('cms.advtarget_description') );
+			$form->display('created_at', trans('admin.created_at'));
+			$form->display('updated_at', trans('admin.updated_at'));
 		});
 	}
 	
@@ -94,12 +96,12 @@ class AdvtargetController extends BaseController {
 		if ($this->form()->destroy($id)) {
 			return response()->json([
 					'status'  => true,
-					'message' => trans('admin::lang.delete_succeeded'),
+					'message' => trans('admin.delete_succeeded'),
 			]);
 		} else {
 			return response()->json([
 					'status'  => false,
-					'message' => trans('admin::lang.delete_failed'),
+					'message' => trans('admin.delete_failed'),
 			]);
 		}
 	}

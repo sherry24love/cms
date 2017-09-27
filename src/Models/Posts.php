@@ -13,7 +13,7 @@ class Posts extends Model {
 	
 	
     protected $fillable = [
-    		'display' , 'title' , 'keyword' , 'description' , 'order' , 'category_id' , 'cover' , 'content' ,'is_hot' , 'is_top' , 'is_recom' , 'is_pic'
+    		'display' , 'title' , 'keyword' , 'description' , 'sort' , 'category_id' , 'cover' , 'content' ,'is_hot' , 'is_top' , 'is_recom' , 'is_pic'
     ];
 
     public function __construct(array $attributes = []) {

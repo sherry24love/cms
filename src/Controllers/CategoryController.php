@@ -6,11 +6,10 @@ use Encore\Admin\Form;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
 use Encore\Admin\Tree;
-
-use Sherry\Cms\Models\Category ;
-
 use Encore\Admin\Controllers\ModelForm ;
-use Sherry\Cms\Models\Posts;
+
+use Sherrycin\Cms\Models\Category ;
+use Sherrycin\Cms\Models\Posts;
 
 class CategoryController extends BaseController
 {
@@ -19,16 +18,16 @@ class CategoryController extends BaseController
 	public function index() {
 		
 		return Admin::content(function(Content $content ){
-			$content->header(trans('cms::lang.category'));
-			$content->description(trans('admin::lang.list'));
+			$content->header(trans('cms.category'));
+			$content->description(trans('admin.list'));
 			$content->row( $this->treeView()->render() );
 		});
 	}
 	
 	public function create() {
 		return Admin::content(function (Content $content) {
-			$content->header(trans('cms::lang.category'));
-			$content->description(trans('admin::lang.create'));
+			$content->header(trans('cms.category'));
+			$content->description(trans('admin.create'));
 			$content->row($this->form());
 		});
 	}
@@ -42,8 +41,8 @@ class CategoryController extends BaseController
 	 */
 	public function edit($id) {
 		return Admin::content(function (Content $content) use ($id) {
-			$content->header(trans('cms::lang.category'));
-			$content->description(trans('admin::lang.edit'));
+			$content->header(trans('cms.category'));
+			$content->description(trans('admin.edit'));
 	
 			$content->row($this->form()->edit($id));
 		});
@@ -59,20 +58,17 @@ class CategoryController extends BaseController
 			$user = auth()->guard('admin')->user();
 			$orgId = $user->org_id ;
 			$form->display('id', 'ID');
-			$form->select('parent_id', trans('admin::lang.parent_id'))->options( function( ) use( $orgId ) {
+			$form->select('parent_id', trans('admin.parent_id'))->options( function( ) use( $orgId ) {
 				$cate = new Category();
 				return $cate->selectOwnTree( $orgId );
 			});
-			$form->text('name', trans('cms::lang.category'))->rules('required');
-			$form->text('keyword', trans('cms::lang.keyword'));
-			$form->text('description', trans('cms::lang.description'));
-			$form->image('cover', trans('shop::lang.cover'))->rules('required')->help('请上传图片');
-			$form->ueditor('content' , trans('cms::lang.content') );
-			$form->display('created_at', trans('admin::lang.created_at'));
-			$form->display('updated_at', trans('admin::lang.updated_at'));
-			$form->saving( function( $form ) use( $orgId ) {
-				$form->model()->org_id = $orgId ;
-			} );
+			$form->text('name', trans('cms.category'))->rules('required');
+			$form->text('keyword', trans('cms.keyword'));
+			$form->text('description', trans('cms.description'));
+			$form->image('cover', trans('cms.cover'))->rules('required')->help('请上传图片');
+			$form->ueditor('content' , trans('cms.content') );
+			$form->display('created_at', trans('admin.created_at'));
+			$form->display('updated_at', trans('admin.updated_at'));
 		});
 	}
 	
@@ -83,10 +79,6 @@ class CategoryController extends BaseController
 	{
 		return Category::tree(function (Tree $tree) {
 			$user = auth()->guard('admin')->user();
-			$orgId = $user->org_id ;
-			$tree->query(function( $query ) use( $orgId ) {
-				return $query->where('org_id' , $orgId );
-			});
 			$tree->branch(function ($branch) {
 				$payload = "<strong>{$branch['name']}</strong>";
 				return $payload;
@@ -127,12 +119,12 @@ class CategoryController extends BaseController
 		if ($this->form()->destroy($id)) {
 			return response()->json([
 					'status'  => true,
-					'message' => trans('admin::lang.delete_succeeded'),
+					'message' => trans('admin.delete_succeeded'),
 			]);
 		} else {
 			return response()->json([
 					'status'  => false,
-					'message' => trans('admin::lang.delete_failed'),
+					'message' => trans('admin.delete_failed'),
 			]);
 		}
 	}

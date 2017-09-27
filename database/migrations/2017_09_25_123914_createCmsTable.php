@@ -100,7 +100,18 @@ class CreateCmsTable extends Migration
         	$table->integer('user_id' , false , true )->default( 0 );
         	$table->string('mobile' , 20 )->nullable();
         	$table->text('content');
-        	$table->tinyInteger('status' , false , true )->default( 0 );
+        	$table->tinyInteger('status', false, true )->default ( 0 );
+			$table->timestamps ();
+		} );
+		
+		Schema::create ( 'cms_singlepage', function (Blueprint $table) {
+			$table->increments ( 'id' );
+			$table->string ( 'title', 255 );
+			$table->string ( 'author', 50 )->nullable ();
+			$table->string ( 'keyword', 255 )->nullable ();
+			$table->string ( 'description' )->nullable ();
+			$table->string ( 'cover', 255 )->nullable ();
+			$table->text ( 'content' );
         	$table->timestamps();
         });
     }
@@ -118,5 +129,6 @@ class CreateCmsTable extends Migration
         Schema::dropIfExists('cms_adv');
         Schema::dropIfExists('cms_blog');
         Schema::dropIfExists('cms_feedback');
+        Schema::dropIfExists('cms_singlepage');
     }
 }

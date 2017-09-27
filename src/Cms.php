@@ -156,6 +156,25 @@ class Cms {
 			
 			]);
 			
+			
+			/**
+			 * 意见反馈
+			 */
+			/**
+			 * 意见反馈
+			 */
+			$router->resource('cms/feedback', 'FeedbackController' , [
+					'names' => [
+							'index' => 'cms.feedback.index' ,
+							'create' => 'cms.feedback.create' ,
+							'store' => 'cms.feedback.store' ,
+							'edit' => 'cms.feedback.edit' ,
+							'update' => 'cms.feedback.update' ,
+							'destroy' => 'cms.feedback.destroy' ,
+					] ,
+					'middleware' => ['admin.permission:check,cms_feedback']
+			]);
+			
 		});
 	}
 }
