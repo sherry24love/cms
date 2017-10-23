@@ -93,7 +93,7 @@ class AdvertisementController extends BaseController {
 				return Advtarget::pluck('title' , 'id');
 			})->rules('required');
 			$form->text('link' , trans('cms.link'))->help( $this->linkHelper() )->rules('required');
-			$form->image('cover', trans('cms.cover'))->rules('required');
+			$form->image('cover', trans('cms.cover'));
 			$form->dateRange('start_at', 'end_at' , trans('cms.adv_display_date') );
 			$form->number('sort', trans('cms.sort'))->default( 0 )->help('序号不能为负数，且序号越大越靠前');
 			$states = [
